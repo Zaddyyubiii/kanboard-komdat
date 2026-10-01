@@ -1,9 +1,60 @@
-# Aplikasi Web "Kanboard"
+<a id="aplikasi-web-kanboard"></a>
 
-| [Sekilas Tentang](#sekilas-tentang) | [Instalasi](#instalasi) | [Konfigurasi](#konfigurasi) | [Maintenance](#maintenance) | [Otomatisasi](#otomatisasi) | [Cara Pemakaian](#cara-pemakaian) | [Pembahasan](#pembahasan) | [Referensi](#referensi) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+# 🗂️ Aplikasi Web "Kanboard"
 
-**Anggota Kelompok:**
+**[Sekilas Tentang](#sekilas-tentang) · [Instalasi](#instalasi) · [Konfigurasi](#konfigurasi) · [Maintenance](#maintenance)**<br>
+**[Otomatisasi](#otomatisasi) · [Cara Pemakaian](#cara-pemakaian) · [Pembahasan](#pembahasan) · [Referensi](#referensi)**
+
+<details>
+<summary><strong>📑 Daftar isi lengkap</strong></summary>
+
+<!-- daftar-isi:start -->
+
+- [Sekilas Tentang](#sekilas-tentang)
+- [Instalasi](#instalasi)
+  - [Lingkungan yang Digunakan](#lingkungan-yang-digunakan)
+  - [Prasyarat](#prasyarat)
+  - [Langkah Instalasi](#langkah-instalasi)
+  - [Kendala yang Ditemui](#kendala-yang-ditemui)
+- [Konfigurasi](#konfigurasi)
+  - [Pengaturan Aplikasi](#pengaturan-aplikasi)
+  - [Variabel Lingkungan dan Berkas Konfigurasi](#variabel-lingkungan-dan-berkas-konfigurasi)
+  - [Mengaktifkan Instalasi Plugin dari Antarmuka Web](#mengaktifkan-instalasi-plugin-dari-antarmuka-web)
+  - [Notifikasi Email](#notifikasi-email)
+  - [Basis Data untuk Tim Besar (Opsional)](#basis-data-untuk-tim-besar-opsional)
+- [Maintenance](#maintenance)
+  - [Cek Kesehatan Aplikasi](#cek-kesehatan-aplikasi)
+  - [Backup Data](#backup-data)
+  - [Restore Data](#restore-data)
+  - [Pembaruan Versi](#pembaruan-versi)
+- [Otomatisasi](#otomatisasi)
+  - [Skrip Instalasi (`setup.sh`)](#skrip-instalasi-setupsh)
+  - [Backup Mingguan Otomatis (`backup.sh` + cron)](#backup-mingguan-otomatis-backupsh--cron)
+- [Cara Pemakaian](#cara-pemakaian)
+  - [1 — Login.](#1--login)
+  - [2 — Dashboard.](#2--dashboard)
+  - [3 — Membuat proyek.](#3--membuat-proyek)
+  - [4 — Menambahkan anggota proyek.](#4--menambahkan-anggota-proyek)
+  - [5 — Membuat *task* dan menugaskan anggota.](#5--membuat-task-dan-menugaskan-anggota)
+  - [6 — Mengelola papan Kanban.](#6--mengelola-papan-kanban)
+  - [7 — *Subtask* dan komentar.](#7--subtask-dan-komentar)
+  - [8 — Daftar tugas per pengguna.](#8--daftar-tugas-per-pengguna)
+  - [9 — Pencarian dan filter.](#9--pencarian-dan-filter)
+  - [10 — *Automatic actions*.](#10--automatic-actions)
+  - [11 — Analitik proyek.](#11--analitik-proyek)
+- [Pembahasan](#pembahasan)
+  - [Kelebihan](#kelebihan)
+  - [Kekurangan](#kekurangan)
+  - [Perbandingan dengan Aplikasi Sejenis](#perbandingan-dengan-aplikasi-sejenis)
+  - [Kesimpulan](#kesimpulan)
+- [Referensi](#referensi)
+<!-- daftar-isi:end -->
+
+</details>
+
+---
+
+## 👥 Anggota Kelompok
 
 | Nama | NIM |
 | --- | --- |
@@ -15,15 +66,18 @@
 
 ---
 
-## Sekilas Tentang
+<a id="sekilas-tentang"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 📖 Sekilas Tentang
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 **Kanboard** adalah aplikasi web manajemen proyek *open source* yang berfokus pada metode **Kanban**. Pekerjaan divisualisasikan sebagai kartu (*task*) yang dipindahkan antar kolom, misalnya *Backlog*, *Ready*, *Work in progress*, dan *Done*, sehingga seluruh anggota tim dapat melihat status pekerjaan secara sekilas.
 
 Kanboard dikembangkan oleh **Frédéric Guillot** bersama komunitas kontributor dan didistribusikan di bawah **lisensi MIT**. Aplikasi ini ditulis dalam bahasa **PHP** dan dapat memakai basis data **SQLite, MySQL/MariaDB, atau PostgreSQL**. Repositori resminya di GitHub telah memperoleh sekitar 9,8 ribu *star*.
 
-Saat ini Kanboard berstatus ***maintenance mode***: pengembang utamanya tidak lagi menambahkan fitur besar, tetapi rilis baru tetap diterbitkan secara berkala dari kontribusi komunitas, dan *pull request* untuk perbaikan maupun fitur baru masih diterima.
+> [!NOTE]
+> Saat ini Kanboard berstatus ***maintenance mode***: pengembang utamanya tidak lagi menambahkan fitur besar, tetapi rilis baru tetap diterbitkan secara berkala dari kontribusi komunitas, dan *pull request* untuk perbaikan maupun fitur baru masih diterima.
 
 Fitur utama Kanboard antara lain:
 
@@ -39,9 +93,11 @@ Fitur utama Kanboard antara lain:
 
 ---
 
-## Instalasi
+<a id="instalasi"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 🛠️ Instalasi
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 ### Lingkungan yang Digunakan
 
@@ -54,9 +110,15 @@ Fitur utama Kanboard antara lain:
 | Biaya | Rp30.500 per bulan |
 | Metode instalasi | Docker Engine + Docker Compose |
 
+> [!NOTE]
 > **Catatan:** Pada laporan ini alamat asli disamarkan. Ganti `<IP-PUBLIK>`, `<PORT-SSH>`, dan `<PORT-WEB>` sesuai informasi di panel VPS masing-masing.
 
+<details>
+<summary>🖼️ Pemesanan VPS</summary>
+
 ![Pemesanan VPS](images/01-vps-order.png)
+
+</details>
 
 ### Prasyarat
 
@@ -65,111 +127,151 @@ Fitur utama Kanboard antara lain:
 - Koneksi internet di sisi server untuk mengunduh paket dan *image* Docker
 - *Port* web yang dapat diakses dari luar (melalui *port forwarding* di panel penyedia)
 
-Kebutuhan sistem Kanboard sendiri (PHP 8.1 ke atas, web server, dan ekstensi PHP) sudah tersedia di dalam *image* Docker resmi, sehingga tidak perlu dipasang manual.
+> [!TIP]
+> Kebutuhan sistem Kanboard sendiri (PHP 8.1 ke atas, web server, dan ekstensi PHP) sudah tersedia di dalam *image* Docker resmi, sehingga tidak perlu dipasang manual.
 
 ### Langkah Instalasi
 
-1. **Masuk ke server melalui SSH.** Karena IP publik dipakai bersama, penyedia memberikan *port* SSH khusus untuk setiap VPS.
+#### Langkah 1 — Masuk ke server melalui SSH.
 
-    ```bash
-    ssh -p <PORT-SSH> ayubi@<IP-PUBLIK>
-    ```
+Karena IP publik dipakai bersama, penyedia memberikan *port* SSH khusus untuk setiap VPS.
 
-    ![Login SSH](images/02-ssh-login.png)
+```bash
+ssh -p <PORT-SSH> ayubi@<IP-PUBLIK>
+```
 
-2. **Perbarui paket sistem.**
+<details>
+<summary>🖼️ Login SSH</summary>
 
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    ```
+![Login SSH](images/02-ssh-login.png)
 
-3. **Tambahkan repositori resmi Docker.**
+</details>
 
-    ```bash
-    sudo apt install -y ca-certificates curl
-    sudo install -m 0755 -d /etc/apt/keyrings
-    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    sudo chmod a+r /etc/apt/keyrings/docker.asc
+#### Langkah 2 — Perbarui paket sistem.
 
-    sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-    Types: deb
-    URIs: https://download.docker.com/linux/ubuntu
-    Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
-    Components: stable
-    Architectures: $(dpkg --print-architecture)
-    Signed-By: /etc/apt/keyrings/docker.asc
-    EOF
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-    sudo apt update
-    ```
+#### Langkah 3 — Tambahkan repositori resmi Docker.
 
-4. **Pasang Docker Engine dan plugin Docker Compose.**
+```bash
+sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-    ```bash
-    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    ```
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
 
-5. **Uji instalasi Docker.** Jika muncul pesan *Hello from Docker!*, Docker sudah berjalan dengan benar.
+sudo apt update
+```
 
-    ```bash
-    sudo docker run hello-world
-    ```
+#### Langkah 4 — Pasang Docker Engine dan plugin Docker Compose.
 
-    ![Docker hello-world](images/03-docker-hello-world.png)
+```bash
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
-6. **Izinkan pengguna menjalankan Docker tanpa `sudo`**, lalu keluar dan login kembali agar grup baru aktif.
+#### Langkah 5 — Uji instalasi Docker.
 
-    ```bash
-    sudo usermod -aG docker $USER
-    exit
-    ```
+Jika muncul pesan *Hello from Docker!*, Docker sudah berjalan dengan benar.
 
-7. **Buat direktori dan berkas `docker-compose.yml`.** *Port* 80 di dalam *container* dipetakan ke *port* 8080 di server, karena *port* standar (25/80/443) pada IP bersama hanya tersedia untuk paket IP *dedicated*.
+```bash
+sudo docker run hello-world
+```
 
-    ```bash
-    mkdir -p ~/kanboard && cd ~/kanboard
-    nano docker-compose.yml
-    ```
+<details>
+<summary>🖼️ Docker hello-world</summary>
 
-    Isi berkas ([docker-compose.yml](docker-compose.yml)):
+![Docker hello-world](images/03-docker-hello-world.png)
 
-    ```yaml
-    services:
-      kanboard:
-        image: kanboard/kanboard:latest
-        container_name: kanboard
-        restart: unless-stopped
-        ports:
-          - "8080:80"
-        volumes:
-          - kanboard_data:/var/www/app/data
-          - kanboard_plugins:/var/www/app/plugins
+</details>
 
+#### Langkah 6
+
+**Izinkan pengguna menjalankan Docker tanpa `sudo`**, lalu keluar dan login kembali agar grup baru aktif.
+
+```bash
+sudo usermod -aG docker $USER
+exit
+```
+
+#### Langkah 7 — Buat direktori dan berkas `docker-compose.yml`.
+
+*Port* 80 di dalam *container* dipetakan ke *port* 8080 di server, karena *port* standar (25/80/443) pada IP bersama hanya tersedia untuk paket IP *dedicated*.
+
+```bash
+mkdir -p ~/kanboard && cd ~/kanboard
+nano docker-compose.yml
+```
+
+Isi berkas ([docker-compose.yml](docker-compose.yml)):
+
+```yaml
+services:
+  kanboard:
+    image: kanboard/kanboard:latest
+    container_name: kanboard
+    restart: unless-stopped
+    ports:
+      - "8080:80"
     volumes:
-      kanboard_data:
-      kanboard_plugins:
-    ```
+      - kanboard_data:/var/www/app/data
+      - kanboard_plugins:/var/www/app/plugins
 
-    - `restart: unless-stopped` membuat Kanboard otomatis berjalan lagi setelah server *reboot*.
-    - *Volume* `kanboard_data` menyimpan basis data SQLite dan lampiran, sehingga data tidak hilang saat *container* diperbarui.
+volumes:
+  kanboard_data:
+  kanboard_plugins:
+```
 
-8. **Jalankan Kanboard dan periksa statusnya.** Status yang benar adalah `Up (healthy)`.
+- `restart: unless-stopped` membuat Kanboard otomatis berjalan lagi setelah server *reboot*.
+- *Volume* `kanboard_data` menyimpan basis data SQLite dan lampiran, sehingga data tidak hilang saat *container* diperbarui.
 
-    ```bash
-    docker compose up -d
-    docker compose ps
-    curl -I http://localhost:8080
-    ```
+#### Langkah 8 — Jalankan Kanboard dan periksa statusnya.
 
-    ![Status container](images/04-compose-ps.png)
+Status yang benar adalah `Up (healthy)`.
 
-9. **Teruskan *port* web di panel VPS.** Buka menu *port forwarding* di panel penyedia, isi **Port di VPS** = `8080`, protokol **TCP**, label `kanboard`, lalu simpan. Panel akan menampilkan *port* publik yang dapat diakses dari internet.
+```bash
+docker compose up -d
+docker compose ps
+curl -I http://localhost:8080
+```
 
-    ![Port forwarding](images/05-port-forwarding.png)
+<details>
+<summary>🖼️ Status container</summary>
 
-10. **Akses Kanboard melalui browser** di `http://<IP-PUBLIK>:<PORT-WEB>`. Login dengan akun bawaan `admin` / `admin`, lalu **segera ganti kata sandi** melalui menu profil karena aplikasi sudah dapat diakses publik.
+![Status container](images/04-compose-ps.png)
 
-    ![Halaman login](images/06-login.png)
+</details>
+
+#### Langkah 9 — Teruskan *port* web di panel VPS.
+
+Buka menu *port forwarding* di panel penyedia, isi **Port di VPS** = `8080`, protokol **TCP**, label `kanboard`, lalu simpan. Panel akan menampilkan *port* publik yang dapat diakses dari internet.
+
+<details>
+<summary>🖼️ Port forwarding</summary>
+
+![Port forwarding](images/05-port-forwarding.png)
+
+</details>
+
+#### Langkah 10
+
+**Akses Kanboard melalui browser** di `http://<IP-PUBLIK>:<PORT-WEB>`. Login dengan akun bawaan `admin` / `admin`, lalu **segera ganti kata sandi** melalui menu profil karena aplikasi sudah dapat diakses publik.
+
+<details>
+<summary>🖼️ Halaman login</summary>
+
+![Halaman login](images/06-login.png)
+
+</details>
 
 ### Kendala yang Ditemui
 
@@ -187,15 +289,22 @@ Selama proses instalasi kami menemui beberapa kendala berikut beserta solusinya:
 
 ---
 
-## Konfigurasi
+<a id="konfigurasi"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## ⚙️ Konfigurasi
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 ### Pengaturan Aplikasi
 
 Pengaturan umum dapat diubah melalui **Settings > Application settings**, misalnya bahasa antarmuka, zona waktu, format tanggal, dan URL aplikasi.
 
+<details>
+<summary>🖼️ Pengaturan aplikasi</summary>
+
 ![Pengaturan aplikasi](images/17-settings.png)
+
+</details>
 
 ### Variabel Lingkungan dan Berkas Konfigurasi
 
@@ -203,7 +312,8 @@ Semua opsi konfigurasi Kanboard dapat diberikan sebagai *environment variable* p
 
 ### Mengaktifkan Instalasi Plugin dari Antarmuka Web
 
-Demi keamanan, instalasi *plugin* melalui antarmuka web dinonaktifkan secara bawaan. Untuk mengaktifkannya, tambahkan variabel berikut pada *service* `kanboard` di `docker-compose.yml`, lalu jalankan `docker compose up -d`:
+> [!IMPORTANT]
+> Demi keamanan, instalasi *plugin* melalui antarmuka web dinonaktifkan secara bawaan. Untuk mengaktifkannya, tambahkan variabel berikut pada *service* `kanboard` di `docker-compose.yml`, lalu jalankan `docker compose up -d`:
 
 ```yaml
     environment:
@@ -212,11 +322,15 @@ Demi keamanan, instalasi *plugin* melalui antarmuka web dinonaktifkan secara baw
 
 ### Notifikasi Email
 
-*Image* Docker resmi tidak mendukung metode `mail` dan `sendmail`, sehingga notifikasi email harus dikirim melalui SMTP atau *plugin* seperti Mailgun, Sendgrid, dan Postmark.
+> [!IMPORTANT]
+> *Image* Docker resmi tidak mendukung metode `mail` dan `sendmail`, sehingga notifikasi email harus dikirim melalui SMTP atau *plugin* seperti Mailgun, Sendgrid, dan Postmark.
 
 ### Basis Data untuk Tim Besar (Opsional)
 
 Instalasi kami memakai SQLite karena paling sederhana dan cukup untuk tim kecil. Dokumentasi resmi menyarankan MySQL/PostgreSQL untuk tim yang lebih besar, merekomendasikan PostgreSQL, dan menganjurkan agar SQLite tidak dipakai bersama Docker. Contoh konfigurasi dengan PostgreSQL:
+
+<details>
+<summary>📄 Contoh konfigurasi dengan PostgreSQL</summary>
 
 ```yaml
 services:
@@ -253,11 +367,15 @@ volumes:
   db:
 ```
 
+</details>
+
 ---
 
-## Maintenance
+<a id="maintenance"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 🧰 Maintenance
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 ### Cek Kesehatan Aplikasi
 
@@ -282,7 +400,8 @@ docker run --rm -v kanboard_kanboard_data:/data -v ~/backup:/backup alpine \
 docker compose start kanboard
 ```
 
-*Container* dihentikan sebentar agar berkas SQLite tidak sedang ditulis saat disalin.
+> [!NOTE]
+> *Container* dihentikan sebentar agar berkas SQLite tidak sedang ditulis saat disalin.
 
 ### Restore Data
 
@@ -296,7 +415,8 @@ docker compose start kanboard
 
 ### Pembaruan Versi
 
-Baca *ChangeLog* resmi sebelum memperbarui untuk memastikan tidak ada perubahan yang merusak. Dokumentasi resmi juga menyarankan menyematkan versi tertentu (misalnya `kanboard/kanboard:v1.2.xx`) alih-alih `latest` agar tidak terjadi pembaruan tak terduga.
+> [!IMPORTANT]
+> Baca *ChangeLog* resmi sebelum memperbarui untuk memastikan tidak ada perubahan yang merusak. Dokumentasi resmi juga menyarankan menyematkan versi tertentu (misalnya `kanboard/kanboard:v1.2.xx`) alih-alih `latest` agar tidak terjadi pembaruan tak terduga.
 
 ```bash
 cd ~/kanboard
@@ -307,13 +427,18 @@ docker image prune -f
 
 ---
 
-## Otomatisasi
+<a id="otomatisasi"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 🔄 Otomatisasi
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 ### Skrip Instalasi (`setup.sh`)
 
 Skrip berikut memasang Docker dan menjalankan Kanboard pada server Ubuntu baru.
+
+<details>
+<summary>📄 setup.sh</summary>
 
 ```bash
 #!/usr/bin/env bash
@@ -372,6 +497,8 @@ sudo docker compose ps
 echo "Selesai. Buka http://<IP-SERVER>:${PORT_WEB}, login admin/admin, lalu segera ganti password."
 ```
 
+</details>
+
 Cara menjalankan:
 
 ```bash
@@ -380,6 +507,9 @@ chmod +x setup.sh
 ```
 
 ### Backup Mingguan Otomatis (`backup.sh` + cron)
+
+<details>
+<summary>📄 backup.sh</summary>
 
 ```bash
 #!/usr/bin/env bash
@@ -403,6 +533,8 @@ docker run --rm -v "$VOLUME":/data -v "$BACKUP_DIR":/backup alpine \
 find "$BACKUP_DIR" -name 'kanboard-data-*.tar.gz' -mtime +"$KEEP_DAYS" -delete
 ```
 
+</details>
+
 Jadwalkan setiap hari Minggu pukul 02.00 dengan `crontab -e`:
 
 ```
@@ -411,61 +543,142 @@ Jadwalkan setiap hari Minggu pukul 02.00 dengan `crontab -e`:
 
 ---
 
-## Cara Pemakaian
+<a id="cara-pemakaian"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 🧑‍💻 Cara Pemakaian
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 Berikut alur pemakaian Kanboard yang kami uji dengan data *dummy* untuk proyek kelompok.
 
-1. **Login.** Masuk menggunakan akun yang sudah dibuat administrator. Setelah login pertama dengan akun `admin`, kata sandi bawaan langsung diganti.
+### 1 — Login.
 
-    ![Login](images/06-login.png)
+Masuk menggunakan akun yang sudah dibuat administrator. Setelah login pertama dengan akun `admin`, kata sandi bawaan langsung diganti.
 
-2. **Dashboard.** Halaman awal menampilkan ringkasan proyek, *task*, dan *subtask* milik pengguna yang sedang login.
+<details>
+<summary>🖼️ Login</summary>
 
-    ![Dashboard](images/07-dashboard.png)
+![Login](images/06-login.png)
 
-3. **Membuat proyek.** Klik **New project**, isi **Name** (misalnya *Tugas Komdat*). Kolom **Identifier** bersifat opsional dan hanya boleh berisi huruf dan angka tanpa spasi. Kolom **Task limit** menentukan batas jumlah *task* per kolom.
+</details>
 
-    ![Membuat proyek](images/08-new-project.png)
+### 2 — Dashboard.
 
-4. **Menambahkan anggota proyek.** Buka pengaturan proyek, pilih **Permissions**, lalu tambahkan pengguna dengan peran *Project Manager*, *Project Member*, atau *Project Viewer*. Hanya *Manager* dan *Member* yang dapat ditugaskan (*assign*) ke sebuah *task*.
+Halaman awal menampilkan ringkasan proyek, *task*, dan *subtask* milik pengguna yang sedang login.
 
-    ![Hak akses proyek](images/09-permissions.png)
+<details>
+<summary>🖼️ Dashboard</summary>
 
-5. **Membuat *task* dan menugaskan anggota.** Klik ikon **+** pada kolom tujuan, isi judul, deskripsi (mendukung Markdown), **Assignee**, tenggat waktu, warna, kategori, dan *tag*.
+![Dashboard](images/07-dashboard.png)
 
-    ![Membuat task](images/10-new-task.png)
+</details>
 
-6. **Mengelola papan Kanban.** *Task* dipindahkan antar kolom dengan *drag-and-drop* untuk menandai perkembangan pekerjaan. Jika jumlah *task* melebihi *WIP limit*, Kanboard memberi tanda pada kolom tersebut.
+### 3 — Membuat proyek.
 
-    ![Papan Kanban](images/11-board.png)
+Klik **New project**, isi **Name** (misalnya *Tugas Komdat*). Kolom **Identifier** bersifat opsional dan hanya boleh berisi huruf dan angka tanpa spasi. Kolom **Task limit** menentukan batas jumlah *task* per kolom.
 
-7. ***Subtask* dan komentar.** Buka detail *task* untuk menambahkan *subtask* (yang dapat ditugaskan ke orang lain), komentar diskusi, dan lampiran.
+<details>
+<summary>🖼️ Membuat proyek</summary>
 
-    ![Detail task](images/12-task-detail.png)
+![Membuat proyek](images/08-new-project.png)
 
-8. **Daftar tugas per pengguna.** Setiap anggota melihat *task* yang ditugaskan kepadanya di menu **My tasks** pada dashboard masing-masing.
+</details>
 
-    ![My tasks](images/13-my-tasks.png)
+### 4 — Menambahkan anggota proyek.
 
-9. **Pencarian dan filter.** Kolom pencarian di atas papan mendukung sintaks lanjutan, misalnya `assignee:me` untuk *task* milik sendiri atau `status:open` untuk *task* yang masih terbuka.
+Buka pengaturan proyek, pilih **Permissions**, lalu tambahkan pengguna dengan peran *Project Manager*, *Project Member*, atau *Project Viewer*. Hanya *Manager* dan *Member* yang dapat ditugaskan (*assign*) ke sebuah *task*.
 
-    ![Filter](images/14-search-filter.png)
+<details>
+<summary>🖼️ Hak akses proyek</summary>
 
-10. ***Automatic actions*.** Pada pengaturan proyek, aksi otomatis dapat dibuat, misalnya menutup *task* secara otomatis ketika dipindahkan ke kolom *Done*.
+![Hak akses proyek](images/09-permissions.png)
 
-    ![Automatic actions](images/15-automatic-actions.png)
+</details>
 
-11. **Analitik proyek.** Menu analitik menampilkan grafik seperti distribusi *task* dan *cumulative flow diagram* untuk memantau kemajuan proyek.
+### 5 — Membuat *task* dan menugaskan anggota.
 
-    ![Analitik](images/16-analytics.png)
+Klik ikon **+** pada kolom tujuan, isi judul, deskripsi (mendukung Markdown), **Assignee**, tenggat waktu, warna, kategori, dan *tag*.
+
+<details>
+<summary>🖼️ Membuat task</summary>
+
+![Membuat task](images/10-new-task.png)
+
+</details>
+
+### 6 — Mengelola papan Kanban.
+
+*Task* dipindahkan antar kolom dengan *drag-and-drop* untuk menandai perkembangan pekerjaan. Jika jumlah *task* melebihi *WIP limit*, Kanboard memberi tanda pada kolom tersebut.
+
+<details open>
+<summary>🖼️ Papan Kanban</summary>
+
+![Papan Kanban](images/11-board.png)
+
+</details>
+
+### 7 — *Subtask* dan komentar.
+
+Buka detail *task* untuk menambahkan *subtask* (yang dapat ditugaskan ke orang lain), komentar diskusi, dan lampiran.
+
+<details>
+<summary>🖼️ Detail task</summary>
+
+![Detail task](images/12-task-detail.png)
+
+</details>
+
+### 8 — Daftar tugas per pengguna.
+
+Setiap anggota melihat *task* yang ditugaskan kepadanya di menu **My tasks** pada dashboard masing-masing.
+
+<details>
+<summary>🖼️ My tasks</summary>
+
+![My tasks](images/13-my-tasks.png)
+
+</details>
+
+### 9 — Pencarian dan filter.
+
+Kolom pencarian di atas papan mendukung sintaks lanjutan, misalnya `assignee:me` untuk *task* milik sendiri atau `status:open` untuk *task* yang masih terbuka.
+
+<details>
+<summary>🖼️ Filter</summary>
+
+![Filter](images/14-search-filter.png)
+
+</details>
+
+### 10 — *Automatic actions*.
+
+Pada pengaturan proyek, aksi otomatis dapat dibuat, misalnya menutup *task* secara otomatis ketika dipindahkan ke kolom *Done*.
+
+<details>
+<summary>🖼️ Automatic actions</summary>
+
+![Automatic actions](images/15-automatic-actions.png)
+
+</details>
+
+### 11 — Analitik proyek.
+
+Menu analitik menampilkan grafik seperti distribusi *task* dan *cumulative flow diagram* untuk memantau kemajuan proyek.
+
+<details>
+<summary>🖼️ Analitik</summary>
+
+![Analitik](images/16-analytics.png)
+
+</details>
 
 ---
 
-## Pembahasan
+<a id="pembahasan"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 💬 Pembahasan
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 ### Kelebihan
 
@@ -509,9 +722,11 @@ Kanboard cocok untuk tim kecil hingga menengah yang ingin menerapkan metode Kanb
 
 ---
 
-## Referensi
+<a id="referensi"></a>
 
-[`^ kembali ke atas ^`](#aplikasi-web-kanboard)
+## 🔗 Referensi
+
+[↑ Kembali ke atas](#aplikasi-web-kanboard)
 
 1. [Kanboard - Situs Resmi](https://kanboard.org/)
 2. [Kanboard - Repositori GitHub](https://github.com/kanboard/kanboard)
