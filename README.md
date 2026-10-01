@@ -7,9 +7,11 @@
 
 | Nama | NIM |
 | --- | --- |
-| Nama Anggota 1 | NIM |
-| Nama Anggota 2 | NIM |
-| Nama Anggota 3 | NIM |
+| Ayubi Fathan | M0403241050 |
+| Syahwali Khan Habibi Harahap | M0403241128 |
+| Micko Fahraezi | M0403241033 |
+| Nafil Khautal Budiono | M0403241102 |
+| Muhammad Syaamil | M0403241115 |
 
 ---
 
