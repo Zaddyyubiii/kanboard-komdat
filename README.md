@@ -2,7 +2,7 @@
 
 # 🗂️ Aplikasi Web "Kanboard"
 
-🌐 **Akses aplikasi:** [kanboard-komdat7.duckdns.org](http://kanboard-komdat7.duckdns.org/)
+🌐 **Akses aplikasi:** [kanboard-komdat7.duckdns.org](https://kanboard-komdat7.duckdns.org/)
 
 **[Sekilas Tentang](#sekilas-tentang) · [Instalasi](#instalasi) · [Konfigurasi](#konfigurasi) · [Maintenance](#maintenance)**<br>
 **[Otomatisasi](#otomatisasi) · [Cara Pemakaian](#cara-pemakaian) · [Pembahasan](#pembahasan) · [Referensi](#referensi)**
@@ -269,7 +269,7 @@ Buka menu *port forwarding* di panel penyedia, isi **Port di VPS** = `8080`, pro
 **Akses Kanboard melalui browser** di `http://<IP-PUBLIK>:<PORT-WEB>`. Login dengan akun bawaan `admin` / `admin`, lalu **segera ganti kata sandi** melalui menu profil karena aplikasi sudah dapat diakses publik.
 
 > [!TIP]
-> Instalasi kami sekarang dapat diakses melalui [http://kanboard-komdat7.duckdns.org/](http://kanboard-komdat7.duckdns.org/).
+> Instalasi kami sekarang dapat diakses melalui [https://kanboard-komdat7.duckdns.org/](https://kanboard-komdat7.duckdns.org/).
 
 <details>
 <summary>🖼️ Halaman login</summary>
